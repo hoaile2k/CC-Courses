@@ -12,7 +12,6 @@ cc.Class({
         this.parentNode = this.node.parent
         cc.log("Hello!!!")
         cc.log("Im Brownie")
-        cc.log(this.node)
     },
 
     update (dt) {
