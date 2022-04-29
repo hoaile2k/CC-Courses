@@ -2,7 +2,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        
+        getBrownBunny:{
+            default: null,
+            type: cc.Component
+        },
     },
 
     // onLoad () {},
@@ -14,7 +17,7 @@ cc.Class({
     },
     update (dt) {
         if(this.node.x==this.defaultLocation+100){
-            this.parentNode.children[1].active = true
+            this.getBrownBunny.node.active = true
             return;
         }
         else{

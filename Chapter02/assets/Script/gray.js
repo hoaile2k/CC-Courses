@@ -3,6 +3,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        getBlackBunny:{
+            default: null,
+            type: cc.Component
+        },
        _defaultLocationY: 0,
     },
 
@@ -13,7 +17,6 @@ cc.Class({
         this.jump = 0
         this.count = 0
         this.tempCount = 0
-        this.parentNode = this.node.parent
         cc.log("Hmmm!!!")
     },
 
@@ -32,7 +35,7 @@ cc.Class({
             }
         }
         else{
-            this.parentNode.children[3].active = true
+            this.getBlackBunny.node.active = true
             return
         }       
     },

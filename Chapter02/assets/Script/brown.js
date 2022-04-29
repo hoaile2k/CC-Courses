@@ -2,21 +2,23 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        
+        getGrayBunny:{
+            default: null,
+            type: cc.Component
+        }
     },
 
     // onLoad () {},
 
     start () {
         this.defaultLocation = this.node.x
-        this.parentNode = this.node.parent
         cc.log("Hello!!!")
         cc.log("Im Brownie")
     },
 
     update (dt) {
         if(this.node.x==this.defaultLocation+100){
-            this.parentNode.children[2].active = true
+            this.getGrayBunny.node.active = true
             return;
         }
         else{
