@@ -5,14 +5,11 @@ cc.Class({
         
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
     // onLoad () {},
 
     start () {
         this.defaultLocation = this.node.x
         cc.log("Hello")
-        // this.parentNode = this.node.parent 
         this.parentNode = this.node.parent
     },
     update (dt) {

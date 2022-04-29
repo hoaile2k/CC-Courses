@@ -6,13 +6,10 @@ cc.Class({
        _defaultLocationY: 0,
     },
 
-    // LIFE-CYCLE CALLBACKS:
-
     // onLoad () {},
 
     start () {
         this._defaultLocationY = this.node.y
-        // this.defaultLocationY = this.node.y
         this.jump = 0
         this.count = 0
         this.tempCount = 0

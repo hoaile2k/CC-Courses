@@ -15,7 +15,6 @@ cc.Class({
     },
 
     update (dt) {
-        // console.log(dt)
         if(this.node.x==this.defaultLocation+100){
             this.parentNode.children[2].active = true
             return;
