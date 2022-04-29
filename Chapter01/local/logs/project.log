@@ -1,0 +1,70 @@
+2022-04-27T08:25:07.136Z - normal: Load ~/.CocosCreator/settings.json
+2022-04-27T08:25:07.183Z - normal: Initializing Asset Database
+2022-04-27T08:25:07.185Z - normal: checking language setting...
+2022-04-27T08:25:07.185Z - normal: Language: en
+2022-04-27T08:25:07.689Z - success: preview server running at http://localhost:7457
+2022-04-27T08:25:07.701Z - success: protocol editor-framework registered
+2022-04-27T08:25:07.702Z - success: protocol app registered
+2022-04-27T08:25:07.702Z - success: protocol theme registered
+2022-04-27T08:25:07.702Z - success: protocol packages registered
+2022-04-27T08:25:07.702Z - success: protocol uuid registerred
+2022-04-27T08:25:07.702Z - success: protocol db registerred
+2022-04-27T08:25:07.702Z - success: protocol thumbnail registerred
+2022-04-27T08:25:07.702Z - success: protocol unpack registerred
+2022-04-27T08:25:07.702Z - success: protocol disable-commonjs registerred
+2022-04-27T08:25:08.587Z - normal: connected!
+2022-04-27T08:25:08.588Z - normal: Check project /Users/fresher-vanhoai/Desktop/CC-Courses/Chapter01
+2022-04-27T08:25:08.590Z - normal: Initializing project /Users/fresher-vanhoai/Desktop/CC-Courses/Chapter01
+2022-04-27T08:25:08.846Z - normal: Initializing Cocos2d
+2022-04-27T08:25:09.305Z - normal: Initializing engine extends
+2022-04-27T08:25:09.326Z - success: alipay-adapter loaded
+2022-04-27T08:25:09.334Z - success: asset-db-debugger loaded
+2022-04-27T08:25:09.339Z - success: baidu-adapter loaded
+2022-04-27T08:25:09.342Z - success: color-picker loaded
+2022-04-27T08:25:09.456Z - success: fb-audience-network loaded
+2022-04-27T08:25:09.491Z - success: fb-live-stream loaded
+2022-04-27T08:25:09.494Z - success: google-play-instant loaded
+2022-04-27T08:25:09.497Z - success: huawei-runtime loaded
+2022-04-27T08:25:09.642Z - success: cpk-publish loaded
+2022-04-27T08:25:09.643Z - success: jsb-adapter loaded
+2022-04-27T08:25:09.646Z - success: oppo-runtime loaded
+2022-04-27T08:25:09.650Z - success: package-manager loaded
+2022-04-27T08:25:09.724Z - success: qqplay-adapter loaded
+2022-04-27T08:25:09.725Z - success: runtime-dev-tools loaded
+2022-04-27T08:25:09.728Z - success: sdkbox loaded
+2022-04-27T08:25:09.731Z - success: tester loaded
+2022-04-27T08:25:09.733Z - success: ui-kit-preview-extra loaded
+2022-04-27T08:25:09.735Z - success: ui-kit-preview loaded
+2022-04-27T08:25:09.737Z - success: ui-kit loaded
+2022-04-27T08:25:09.741Z - success: vivo-runtime loaded
+2022-04-27T08:25:09.741Z - success: weapp-adapter loaded
+2022-04-27T08:25:09.742Z - success: xiaomi-adapter loaded
+2022-04-27T08:25:09.743Z - success: alipay-minigame loaded
+2022-04-27T08:25:09.776Z - success: assets loaded
+2022-04-27T08:25:09.778Z - success: builder loaded
+2022-04-27T08:25:09.953Z - success: cocos-services loaded
+2022-04-27T08:25:09.958Z - success: console loaded
+2022-04-27T08:25:09.981Z - success: fb-instant-games loaded
+2022-04-27T08:25:09.984Z - success: game-window loaded
+2022-04-27T08:25:09.985Z - success: google-instant-games loaded
+2022-04-27T08:25:09.988Z - success: hierarchy loaded
+2022-04-27T08:25:09.991Z - success: inspector loaded
+2022-04-27T08:25:09.992Z - success: keystore loaded
+2022-04-27T08:25:09.995Z - success: node-library loaded
+2022-04-27T08:25:09.997Z - success: package-asset loaded
+2022-04-27T08:25:09.998Z - success: preferences loaded
+2022-04-27T08:25:10.000Z - success: project-exporter loaded
+2022-04-27T08:25:10.004Z - success: project-importer loaded
+2022-04-27T08:25:10.007Z - success: project-settings loaded
+2022-04-27T08:25:10.013Z - success: scene loaded
+2022-04-27T08:25:10.014Z - success: simulator-debugger loaded
+2022-04-27T08:25:10.014Z - success: sprite-editor loaded
+2022-04-27T08:25:10.017Z - success: store loaded
+2022-04-27T08:25:10.024Z - success: timeline loaded
+2022-04-27T08:25:10.027Z - success: xiaomi-runtime loaded
+2022-04-27T08:25:11.765Z - info: Cocos Services load base data!
+2022-04-27T08:25:14.088Z - normal: Loading packages
+2022-04-27T08:25:14.093Z - normal: Watching packages
+2022-04-27T08:25:14.183Z - normal: Run Application
+2022-04-27T08:25:24.645Z - warn: Download Font [ OpenSans-Bold_LABEL ] failed, using Arial or system default font instead
+2022-04-27T08:25:35.879Z - info: shutdown preview server
