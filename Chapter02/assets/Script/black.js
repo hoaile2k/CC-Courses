@@ -2,7 +2,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        _scaleBlack : 3,
         _defaultX: 0,
         _scaleTo: 3
     },
@@ -21,9 +20,9 @@ cc.Class({
 
     update (dt) {
         //Code tay
-        if(this.node.scale < this._scaleTo){
-            this.node.scale += 0.05
-            
+        if(this.node.scaleY < this._scaleTo){
+            this.node.scaleX += 0.05
+            this.node.scaleY += 0.05
         }
         if(this.node.scale >= this._scaleTo){
             if(this.moveTo < this._defaultX + 100){
@@ -31,15 +30,17 @@ cc.Class({
                 this.moveTo ++
                 if(this.node.x == this._defaultX + 100){
                     this.moveBack = this._defaultX + 100
+                    this.node.scaleX = -3
                 }
             }
-            if(this.moveBack > this._defaultX){
-                this.moveBack --;
-                this.node.x --;
-            }
-            else{
-                return
-            }
+            
+        }
+        if(this.moveBack > this._defaultX){
+            this.moveBack --;
+            this.node.x --;
+        }
+        else{
+            return
         }
             
     },
