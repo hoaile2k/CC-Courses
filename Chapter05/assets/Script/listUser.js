@@ -20,8 +20,8 @@ cc.Class({
             let item = cc.instantiate(this.item);
                 item.parent = this.node;
                 item.y = listUser.length * (-30);
-            item.getComponent("cc.Label").string = listUser[listUser.length-1].email + "  -  " + listUser[listUser.length-1].password
-
+            item.getComponent("cc.Label").string = listUser[listUser.length-1].userName + "  -  " + listUser[listUser.length-1].email + "  -  " + listUser[listUser.length-1].password
+            cc.log(listUser)
         }
 
     },
@@ -31,12 +31,6 @@ cc.Class({
     },
 
     update (dt) {
-        // if(this._count < this.register._listUser.length){
-        //     this._count++
-        // }
-        // if(this._count == this.register._listUser.length){
-        //     this.insertUsers()
-        // }
         
     },
 });

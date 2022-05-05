@@ -2,11 +2,16 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        _yourUsername: "",
         _yourEmail: "",
         _yourPassword: "",
         _users: cc.Object,
         _listUser: [],
         showUser:{
+            default: null,
+            type: cc.Component
+        },
+        resetUsernameBox:{
             default: null,
             type: cc.Component
         },
@@ -21,6 +26,9 @@ cc.Class({
     },
 
     // onLoad () {},
+    getUsername(value){
+        this._yourUsername = value
+    },
     getEmail(value){
         this._yourEmail = value
     },
@@ -30,6 +38,7 @@ cc.Class({
     btnRegisterClick(){
         this._users = {
             ID: this._listUser.length,
+            userName: this._yourUsername,
             email: this._yourEmail,
             password: this._yourPassword
         }
@@ -38,6 +47,7 @@ cc.Class({
         this.showUser.node.active = true
     },
     resetEditBox(){
+        this.resetUsernameBox.string = ""
         this.resetEmailBox.string = ""
         this.resetPassBox.string = ""
     },
