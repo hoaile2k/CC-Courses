@@ -40,6 +40,7 @@ cc.Class({
             this.node.x --;
         }
         else{
+            this.node.scaleX = 3
             return
         }
             
