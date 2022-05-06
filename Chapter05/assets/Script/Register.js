@@ -60,7 +60,7 @@ cc.Class({
         this.resetPassBox.string = ""
     },
     start () {
-        this.node.on("click", this.resetEditBox,this)
+        
     },
 
     // update (dt) {},

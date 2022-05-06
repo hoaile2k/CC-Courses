@@ -14,6 +14,7 @@ cc.Class({
             default:null,
             type: cc.ProgressBar
         },
+
     },
 
     // onLoad () {},
