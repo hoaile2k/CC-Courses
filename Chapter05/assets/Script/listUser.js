@@ -7,7 +7,6 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        _count: 0,
     },
 
     // onLoad () {},
@@ -17,9 +16,10 @@ cc.Class({
             let item = cc.instantiate(this.item);
             item.parent = this.node;
             item.y = listUser.length * (-30);
-            let labelString = this.node.children[listUser.length-1].children[2].getComponent("cc.Label")
+            let labelString = this.node.children[listUser.length - 1].children[2].getComponent("cc.Label")
             labelString.string = listUser[listUser.length - 1].userName
         }
+
     },
 
     start() {

@@ -7,7 +7,7 @@ cc.Class({
             default: null,
             type: cc.Component
         },
-        toggle:cc.Toggle
+        register: require("Register"),
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -21,11 +21,14 @@ cc.Class({
         items.forEach((element,index) => {
             if(items[index].getComponent("cc.Toggle").isChecked){
                 items[index].destroy()
+                cc.log(index)
+                this.register._listUser.splice(index,1)
             }
         });
+
     },
     start () {
-       
+
     },
 
     // update (dt) {},

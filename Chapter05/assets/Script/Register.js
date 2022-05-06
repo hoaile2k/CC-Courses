@@ -27,32 +27,48 @@ cc.Class({
             default: null,
             type: cc.Component
         },
+        messageBox: cc.Label
     },
 
     // onLoad () {},
     getUsername(value){
-        this._yourUsername = value
+        if(value){
+            this._yourUsername = value
+        }
     },
     getEmail(value){
-        this._yourEmail = value
+        if(value){
+            this._yourEmail = value
+        }
     },
     getPassword(value){
-        this._yourPassword = value
+        if(value)   { this._yourPassword = value }
     },
     btnRegisterClick(){
-        this._users = {
-            id: this._listUser.length,
-            userName: this._yourUsername,
-            email: this._yourEmail,
-            password: this._yourPassword
+        if(this._yourUsername && this._yourPassword && this._yourEmail) {
+            this._users = {
+                id: this._listUser.length,
+                userName: this._yourUsername,
+                email: this._yourEmail,
+                password: this._yourPassword
+            }
+            this._listUser.push(this._users)
+            this.node.active = false
+            this.showPopupLogin.node.active = true
+            this._yourUsername = ""
+            this._yourEmail = ""
+            this._yourPassword = ""
+            this.messageBox.node.active = false
+            this.scheduleOnce(()=> {
+                this.showPopupLogin.node.active = false
+                this.showUser.node.active = true
+            }, 1.5);
+            cc.log(this._listUser)
+        }else{
+            this.messageBox.node.active = true
+            this.messageBox.string = "Vui lòng nhập đầy đủ thông tin"
         }
-        this._listUser.push(this._users)
-        this.node.active = false
-        this.showPopupLogin.node.active = true
-        this.scheduleOnce(()=> {
-            this.showPopupLogin.node.active = false
-            this.showUser.node.active = true
-        }, 1.5);
+
     },
     resetEditBox(){
         this.resetUsernameBox.string = ""
