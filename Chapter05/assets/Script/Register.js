@@ -11,6 +11,10 @@ cc.Class({
             default: null,
             type: cc.Component
         },
+        showPopupLogin:{
+            default: null,
+            type: cc.Component
+        },
         resetUsernameBox:{
             default: null,
             type: cc.Component
@@ -22,7 +26,7 @@ cc.Class({
         resetPassBox:{
             default: null,
             type: cc.Component
-        }
+        },
     },
 
     // onLoad () {},
@@ -37,14 +41,18 @@ cc.Class({
     },
     btnRegisterClick(){
         this._users = {
-            ID: this._listUser.length,
+            id: this._listUser.length,
             userName: this._yourUsername,
             email: this._yourEmail,
             password: this._yourPassword
         }
         this._listUser.push(this._users)
         this.node.active = false
-        this.showUser.node.active = true
+        this.showPopupLogin.node.active = true
+        // this.scheduleOnce(()=> {
+            this.showPopupLogin.node.active = false
+            this.showUser.node.active = true
+        // }, 1.5);
     },
     resetEditBox(){
         this.resetUsernameBox.string = ""

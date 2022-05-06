@@ -3,34 +3,43 @@ cc.Class({
 
     properties: {
         register: require("Register"),
-        item:{
+        item: {
             default: null,
             type: cc.Prefab
         },
-        _count: 0
+        _count: 0,
+        // label: {
+        //     type: cc.Label,
+        //     default: this.item.data.children[2].getComponent("cc.Label"),
+        // }
     },
 
     // onLoad () {},
-    insertUsers(){
+    insertUsers() {
         let listUser = this.register._listUser
-        let email = listUser.map(object => object.email)
-        let search = email.includes(email[listUser.length-1])
-        cc.log(search, email, email[listUser.length-1])
-        if(this.node.active ){
+        let labelString = this.item.data.children[2].getComponent("cc.Label")
+        // let checkItem = this.item.data.children[1].getComponent("cc.Label")
+        cc.log(this.item)
+        // cc.log(this.label.string = "tftft")
+        
+        if (this.node.active) {
+            // listUser.forEach((element,index) => {
+            //     let item = cc.instantiate(this.item);
+            // });
+            labelString.string = listUser[listUser.length - 1].userName + "  -  " + listUser[listUser.length - 1].email + "  -  " + listUser[listUser.length - 1].password
             let item = cc.instantiate(this.item);
-                item.parent = this.node;
-                item.y = listUser.length * (-30);
-            item.getComponent("cc.Label").string = listUser[listUser.length-1].userName + "  -  " + listUser[listUser.length-1].email + "  -  " + listUser[listUser.length-1].password
-            cc.log(listUser)
+            item.parent = this.node;
+            item.y = listUser.length * (-30);
+            cc.log(this.item.data.children[1])
         }
 
     },
 
-    start () {
-        
+    start() {
+
     },
 
-    update (dt) {
-        
+    update(dt) {
+
     },
 });
