@@ -487,7 +487,8 @@
     "_enabled": true,
     "_nodeArray": [],
     "content": null,
-    "toggle": null,
+    "register": null,
+    "sizeProgress": null,
     "_id": ""
   },
   {

@@ -63,7 +63,6 @@ cc.Class({
                 this.showPopupLogin.node.active = false
                 this.showUser.node.active = true
             }, 1.5);
-            cc.log(this._listUser)
         }else{
             this.messageBox.node.active = true
             this.messageBox.string = "Vui lòng nhập đầy đủ thông tin"

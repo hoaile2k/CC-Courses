@@ -8,9 +8,9 @@ cc.Class({
             type: cc.Component
         },
         register: require("Register"),
+        sizeProgress: cc.Slider
     },
 
-    // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
     checkedEvent(){
@@ -21,11 +21,19 @@ cc.Class({
         items.forEach((element,index) => {
             if(items[index].getComponent("cc.Toggle").isChecked){
                 items[index].destroy()
-                cc.log(index)
                 this.register._listUser.splice(index,1)
             }
         });
 
+    },
+    changedFontSize(){
+        let items = this.content.node.children;
+        items.forEach((element,index) => {
+            items[index].scale = this.sizeProgress.progress
+            items[index].scale = this.sizeProgress.progress
+            items[index].scale = this.sizeProgress.progress
+        });
+        
     },
     start () {
 
