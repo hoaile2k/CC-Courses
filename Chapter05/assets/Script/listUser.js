@@ -13,12 +13,12 @@ cc.Class({
     // onLoad () {},
     insertUsers() {
         let listUser = this.register._listUser
-        let labelString = this.item.data.children[2].getComponent("cc.Label")
         if (this.node.active) {
-            labelString.string = listUser[listUser.length - 1].userName
             let item = cc.instantiate(this.item);
             item.parent = this.node;
             item.y = listUser.length * (-30);
+            let labelString = this.node.children[listUser.length-1].children[2].getComponent("cc.Label")
+            labelString.string = listUser[listUser.length - 1].userName
         }
     },
 
@@ -26,7 +26,7 @@ cc.Class({
 
     },
 
-    update(dt) {
+    // update(dt) {
 
-    },
+    // },
 });

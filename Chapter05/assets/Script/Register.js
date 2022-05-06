@@ -49,10 +49,10 @@ cc.Class({
         this._listUser.push(this._users)
         this.node.active = false
         this.showPopupLogin.node.active = true
-        // this.scheduleOnce(()=> {
+        this.scheduleOnce(()=> {
             this.showPopupLogin.node.active = false
             this.showUser.node.active = true
-        // }, 1.5);
+        }, 1.5);
     },
     resetEditBox(){
         this.resetUsernameBox.string = ""

@@ -18,8 +18,6 @@ cc.Class({
     },
     removeNode(){
         let items = this.content.node.children;
-        cc.log(items);
-        
         items.forEach((element,index) => {
             if(items[index].getComponent("cc.Toggle").isChecked){
                 items[index].destroy()
