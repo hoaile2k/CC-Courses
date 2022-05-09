@@ -44,7 +44,6 @@ cc.Class({
     },
     btnDeleteHandler() {
         let label = this.nodeParent.node.children
-        cc.log(label)
         for(let index = label.length-1; index >= 0 ; index--){
             if(label[index].getComponent("cc.Toggle").isChecked){
                 // cc.log(label.children[index].getComponent("cc.Toggle").isChecked)
@@ -55,7 +54,6 @@ cc.Class({
         // label.forEach((element,index) => {
             
         // });
-        cc.log(this._listUser)
     }
 
     // update (dt) {},
