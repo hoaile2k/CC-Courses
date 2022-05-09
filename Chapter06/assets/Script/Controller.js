@@ -27,15 +27,16 @@ cc.Class({
             this.compRegisFrame.node.active = false
             this.loadingScene.node.active = true
         }
-        else if(this.pass != this.rePass){
-            let stringMessage = this.compRegisFrame.node.getChildByName("mainRegis").getChildByName("Message")
-            stringMessage.getComponent("cc.Label").string = "Nhập lại mật khẩu không đúng"
-        }
         else{
             let stringMessage = this.compRegisFrame.node.getChildByName("mainRegis").getChildByName("Message")
             stringMessage.getComponent("cc.Label").string = "Vui lòng nhập đầy đủ thông tin"
             stringMessage.active = true
         }
+        if(this.pass != this.rePass){
+            let stringMessage = this.compRegisFrame.node.getChildByName("mainRegis").getChildByName("Message")
+            stringMessage.getComponent("cc.Label").string = "Nhập lại mật khẩu không đúng"
+        }
+        
 
     },
     editUserBox(data) {
