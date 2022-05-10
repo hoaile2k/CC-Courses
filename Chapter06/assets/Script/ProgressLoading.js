@@ -1,4 +1,5 @@
-
+const Emitter = require('mEmitter');
+const EmitName = require('EmitName');
 cc.Class({
     extends: cc.Component,
 
@@ -20,6 +21,7 @@ cc.Class({
         this.schedule(() => {
             this.getLoading.progress += 1/30
             if (this.getLoading.progress >= 1) {
+                Emitter.instance = new Emitter();    
                 this.getLoading.progress = 0
                 this.getListUser.node.active = true
                 this.node.active = false

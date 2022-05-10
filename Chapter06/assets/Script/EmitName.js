@@ -1,5 +1,6 @@
 const emitterName = { 
-    regisClick:"regisClick"
+    regisClick:"regisClick",
+    loadingComplete: "loadingComplete"
 }
 
 module.exports = emitterName;
