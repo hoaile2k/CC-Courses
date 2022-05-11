@@ -1,4 +1,5 @@
 const Emitter = require("mEmitter")
+const emitName = require("emitName")
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -28,7 +29,7 @@ cc.Class({
                 }
                 let bulletPos = element.x
                 if(bulletPos >= bunnyPos-80){
-                    Emitter.instance.emit("killBunny",dataOfBullet)
+                    Emitter.instance.emit(emitName.killBunny,dataOfBullet)
                     this._checkCollision = false
                 }
             });

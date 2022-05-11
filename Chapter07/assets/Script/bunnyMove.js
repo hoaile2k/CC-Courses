@@ -1,4 +1,5 @@
 const Emitter = require("mEmitter")
+const emitName = require("emitName")
 
 cc.Class({
     extends: cc.Component,
@@ -25,8 +26,8 @@ cc.Class({
     killBunny: function (data){
         this.node.runAction(cc.sequence(cc.flipY(true),cc.moveBy(0,cc.v2(0,-50))))
         this.node.stopAction(this._bunnyAction)
-        Emitter.instance.emit("eventCollisionBunny", data)
-        Emitter.instance.removeEvent("killBunny", this.killBunny)
+        Emitter.instance.emit(emitName.eventCollisionBunny, data)
+        Emitter.instance.removeEvent(emitName.killBunny, this.killBunny)
     },
 
     update(dt) {
