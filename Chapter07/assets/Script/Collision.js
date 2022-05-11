@@ -1,19 +1,37 @@
-
+const Emitter = require("mEmitter")
 cc.Class({
     extends: cc.Component,
-
     properties: {
         getBunny: cc.Component,
-        getBullet: cc.Prefab,
+        getSpineBoy: require("SpineBoyAnim"),
+        _checkCollision: true
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        Emitter.instance = new Emitter();
+    },
 
     start () {
 
     },
 
-    // update (dt) {},
+    update (dt) {
+        if(this._checkCollision == true){
+            let bullet = this.getSpineBoy._listBullet
+            let bunnyPos = this.getBunny.node.x
+            bullet.forEach((element,index) => {
+                let dataOfBullet = {
+                    element: element,
+                    index: index
+                }
+                let bulletPos = element.x
+                if(bulletPos >= bunnyPos-80){
+                    Emitter.instance.emit("killBunny",dataOfBullet)
+                    this._checkCollision = false
+                }
+            });
+        }
+    },
 });

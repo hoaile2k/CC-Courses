@@ -1,3 +1,4 @@
+const Emitter = require("mEmitter")
 
 cc.Class({
     extends: cc.Component,
@@ -5,18 +6,21 @@ cc.Class({
     properties: {
         spineBoy: sp.Skeleton,
         bulletPrefab: cc.Prefab,
+        getBunny: cc.Node,
+        boomSprite: cc.Sprite,
         _isAction: true,
-        getBunny: cc.Component,
         _listBullet: []
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        this.eventCollisionBunny = this.collisionBunny.bind(this)
+        Emitter.instance.registerOnce("eventCollisionBunny",this.eventCollisionBunny)
+    },
 
     start() {
         this.spineBoy.setAnimation(0, "portal", false)
-
         // this.node.on
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
     },
@@ -122,10 +126,10 @@ cc.Class({
         let item = cc.instantiate(bullet);
         if(this.spineBoy.node.scaleX > 0){
             item.parent = this.node.parent;
-            item.x = this.spineBoy.node.x
-            item.y = this.spineBoy.node.y+100
-            let moveBullet = cc.sequence(cc.moveBy(1,cc.v2(1500,0)),cc.delayTime(0.1))
-            item.runAction(cc.sequence(moveBullet, cc.callFunc(()=>{
+            item.x = this.spineBoy.node.x+50
+            item.y = this.spineBoy.node.y+50
+            let moveBullet = cc.sequence(cc.moveBy(2,cc.v2(1000,0)),cc.delayTime(0.1))
+            this.bulletAction= item.runAction(cc.sequence(moveBullet, cc.callFunc(()=>{
                 item.opacity = 0
             })))
             this._listBullet.push(item)
@@ -133,29 +137,32 @@ cc.Class({
             // cc.log("con thỏ", this.getBunny.node.parent)
         }
         else{
-            item.parent = this.node.parent;
-            item.x = this.spineBoy.node.x
+            item.parent = this.spineBoy.node;
+            item.x = this.spineBoy.node.x+50
             item.y = this.spineBoy.node.y+100
-            item.runAction(cc.moveBy(10,cc.v2(-1500,0)))
+            this.bulletAction = item.runAction(cc.moveBy(2,cc.v2(-1500,0)))
             this._listBullet.push(item)
         }
 
         // var dist = Variables.rbWhite.node.position.sub(playerPos).mag();
+    },
+    collisionBunny(data){
+        cc.log(data)
+        this.boomSprite.node.x = data.element.x+100
+        this.boomSprite.node.runAction(cc.sequence(cc.sequence(cc.fadeIn(1),cc.fadeOut(1)),cc.callFunc(()=>{
+            cc.log(this.node.parent.getChildByName(data.element.name))
+        })))
+        this.node.parent.getChildByName(data.element.name).destroy()
+
+        data.element.stopAction(this.bulletAction)
+        
+
     },
     jumpTo() {
 
     },
 
     update(dt) {
-        let bunnyPos = this.getBunny.node.x
-        this._listBullet.forEach((element,index) => {
-            let bulletPos = element.x
-            // cc.log(bunnyPos, bulletPos)
-            if(bulletPos >= bunnyPos){
-                this.getBunny.node.stopAction(this.getBunny.node.getComponent("bunnyMove")._bunnyAction)
-                cc.log(this.getBunny.node.getComponent("bunnyMove")._bunnyAction)
-                // cc.log(  this.getBunny)
-            }
-        });
+        
     },
 });
