@@ -187,8 +187,30 @@ cc.Class({
         }
     },
     collisionBunny(data) {
-        this.boomSprite.node.x = data.node.x
-        this.boomSprite.node.runAction(cc.sequence(cc.fadeIn(1), cc.fadeOut(1)))
+        cc.log(data)
+        let son = data.son
+        let mom = data.mom
+        let sonTalk = data.sonTalk
+        cc.log(data)
+        cc.log("son: ", son, "mom: ", mom)
+        cc.tween(son.node)
+            .delay(2)
+            .call(()=>{
+                sonTalk.string = "Mẹ ơi!!!"
+                cc.tween(sonTalk.node)
+                    .to(0,{scaleX: 0.5})
+                    .start()
+            })
+            .to(0, { scaleX: 0.5 })
+            .to(1, { x: 700 })
+            .call(()=>{
+                cc.tween(mom.node)
+                    .to(2,{x: 350})
+                    .start()
+            })
+            .start()
+        // this.boomSprite.node.x = data.node.x
+        // this.boomSprite.node.runAction(cc.sequence(cc.fadeIn(1), cc.fadeOut(1)))
 
     },
     collissionRip(data) {

@@ -3,6 +3,7 @@ const name = {
     killBunny: "killBunny",
     collissionRip: "collissionRip",
     collissionBunny: "collissionBunny",
-    win: "winning"
+    win: "winning",
+    killMomBunny: "killMomBunny"
 }
 module.exports = name
