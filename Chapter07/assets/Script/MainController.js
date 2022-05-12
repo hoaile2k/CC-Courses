@@ -21,12 +21,10 @@ cc.Class({
         Emitter.instance = new Emitter()
         this.eventCollisionBunny = this.collisionBunny.bind(this)
         this.eventCollisionRip = this.collissionRip.bind(this)
-        this.eventCollisionRipBunny = this.collissionRipBunny.bind(this)
         this.eventWining = this.collissionWinning.bind(this)
 
         Emitter.instance.registerOnce(emitName.eventCollisionBunny, this.eventCollisionBunny)
         Emitter.instance.registerOnce(emitName.collissionRip, this.eventCollisionRip)
-        Emitter.instance.registerOnce(emitName.collissionBunny, this.eventCollisionRipBunny)
         Emitter.instance.registerOnce(emitName.win, this.eventWining)
     },
 
@@ -160,15 +158,13 @@ cc.Class({
         }
         this.spineBoy.setAnimation(0, "idle", false)
     },
-
-
     spaceShoot: function () {
         let bullet = this.bulletPrefab
         let item = cc.instantiate(bullet);
         if (this.spineBoy.node.scaleX > 0) {
             item.parent = this.node.parent;
             item.x = this.spineBoy.node.x + 50
-            item.y = this.spineBoy.node.y + 50
+            item.y = this.spineBoy.node.y +15
             let moveBullet = cc.sequence(cc.moveBy(1, cc.v2(500, 0)), cc.delayTime(0.1))
             this.bulletAction = item.runAction(cc.sequence(moveBullet, cc.callFunc(() => {
                 item.destroy()
@@ -187,12 +183,14 @@ cc.Class({
         }
     },
     collisionBunny(data) {
-        cc.log(data)
         let son = data.son
         let mom = data.mom
         let sonTalk = data.sonTalk
-        cc.log(data)
-        cc.log("son: ", son, "mom: ", mom)
+        if(this.spineTween){
+            this.spineTween.stop()
+        }
+        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN);
+        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP);
         cc.tween(son.node)
             .delay(2)
             .call(()=>{
@@ -204,16 +202,21 @@ cc.Class({
             .to(0, { scaleX: 0.5 })
             .to(1, { x: 700 })
             .call(()=>{
+
                 cc.tween(mom.node)
-                    .to(2,{x: 350})
+                    .to(2,{x: 600})
+                    .call(()=>{
+                        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
+                        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
+                        Emitter.instance.emit(emitName.callMomBummy)
+                    })
+                    .to(2,{x: 400})
                     .start()
+                    
             })
             .start()
-        // this.boomSprite.node.x = data.node.x
-        // this.boomSprite.node.runAction(cc.sequence(cc.fadeIn(1), cc.fadeOut(1)))
-
     },
-    collissionRip(data) {
+    collissionRip(data) {       
         this._isAction = false
         if (this.spineTween) { this.spineTween.stop() }
         data.node.active = true
@@ -231,23 +234,6 @@ cc.Class({
                 cc.director.loadScene("Chapter07")
             })
             .start()
-    },
-    collissionRipBunny(data) {
-        if (this.getBunny.node.scaleY > 0) {
-            if (this.spineTween) { this.spineTween.stop() }
-            this.spineBoy.setAnimation(0, "death", true)
-            data.node.active = true
-            let text = data.node.getChildByName("richtext")
-            cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
-            cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
-            cc.tween(text)
-                .by(1, { scale: 2 })
-                .delay(0.5)
-                .call(() => {
-                    cc.director.loadScene("Chapter07")
-                })
-                .start()
-        }
     },
     collissionWinning(data) {
         data.node.getChildByName("richtext").getComponent("cc.RichText").string = "<color=#00ff00>You </color><color=#0fffff>Win</color>"

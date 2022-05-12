@@ -4,6 +4,7 @@ const name = {
     collissionRip: "collissionRip",
     collissionBunny: "collissionBunny",
     win: "winning",
-    killMomBunny: "killMomBunny"
+    killMomBunny: "killMomBunny",
+    callMomBummy: "callMomBummy",
 }
 module.exports = name
