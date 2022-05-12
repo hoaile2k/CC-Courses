@@ -13,7 +13,7 @@ cc.Class({
 
     onLoad () {
         this.eventKillBunny = this.killBunny.bind(this)
-        Emitter.instance.registerOnce("killBunny",this.eventKillBunny)
+        Emitter.instance.registerOnce(emitName.killBunny,this.eventKillBunny)
     },
 
     start() {
@@ -27,7 +27,6 @@ cc.Class({
         this.node.runAction(cc.sequence(cc.flipY(true),cc.moveBy(0,cc.v2(0,-50))))
         this.node.stopAction(this._bunnyAction)
         Emitter.instance.emit(emitName.eventCollisionBunny, data)
-        Emitter.instance.removeEvent(emitName.killBunny, this.killBunny)
     },
 
     update(dt) {
