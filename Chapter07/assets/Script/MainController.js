@@ -10,6 +10,7 @@ cc.Class({
         getBunny: cc.Component,
         boomSprite: cc.Sprite,
         _isAction: true,
+        _isRunning: false,
         _listBullet: [],
 
     },
@@ -44,6 +45,7 @@ cc.Class({
     },
 
     actionForKeyCodeUp: function (keyCode) {
+        
         switch (keyCode) {
             case cc.macro.KEY.left: {
                 this.moveLeftUp();
@@ -91,6 +93,8 @@ cc.Class({
                     .by(0.5, { x: 150, y: -150 }, { easing: 'smooth' })
                     .call(() => {
                         this._isAction = true
+                        this.spineBoy.setAnimation(0, "idle", false)
+
                     })
                     .start()
             }
@@ -120,9 +124,12 @@ cc.Class({
     },
 
     moveRight: function () {
+        // cc.log(this._isAction)
+        
         if (this._isAction) {
             this._isAction = false
             this.spineBoy.setAnimation(0, "run", true)
+            this._isRunning = true
             this.spineTween =
                 cc.tween(this.spineBoy.node)
                     .to(0, { scaleX: 0.3 })
@@ -133,9 +140,12 @@ cc.Class({
     },
     moveRightUp: function (keyCode) {
         // if (!this._isAction){
+            if(!this._isRunning)
+            return
         this._isAction = true
         if (this.spineTween) {
             this.spineTween.stop()
+            this._isRunning = false
         }
         this.spineBoy.setAnimation(0, "idle", false)
         // }
@@ -175,7 +185,7 @@ cc.Class({
             this._listBullet.push(item)
         }
 
-    },
+``    },
     collisionBunny(data) {
         this.boomSprite.node.x = data.node.x
         this.boomSprite.node.runAction(cc.sequence(cc.fadeIn(1), cc.fadeOut(1)))
@@ -199,6 +209,7 @@ cc.Class({
     },
     collissionRipBunny(data) {
         if (this.getBunny.node.scaleY > 0) {
+            if (this.spineTween) { this.spineTween.stop() }
             this.spineBoy.setAnimation(0, "death", true)
             data.node.active = true
             let text = data.node.getChildByName("richtext")
