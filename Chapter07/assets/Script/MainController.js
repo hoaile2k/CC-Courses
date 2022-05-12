@@ -17,6 +17,7 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        Emitter.instance = new Emitter()
         this.eventCollisionBunny = this.collisionBunny.bind(this)
         this.eventCollisionRip = this.collissionRip.bind(this)
         this.eventCollisionRipBunny = this.collissionRipBunny.bind(this)
@@ -89,7 +90,6 @@ cc.Class({
                     .by(0.5, { x: 150, y: 150 }, { easing: 'smooth' })
                     .by(0.5, { x: 150, y: -150 }, { easing: 'smooth' })
                     .call(() => {
-                        // this.spineBoy.setAnimation(0, "idle", false)
                         this._isAction = true
                     })
                     .start()
@@ -99,7 +99,6 @@ cc.Class({
                     .by(0.5, { x: -150, y: 150 })
                     .by(0.5, { x: -150, y: -150 })
                     .call(() => {
-                        // this.spineBoy.setAnimation(0, "idle", false)
                         this._isAction = true
                     })
                     .start()
@@ -176,13 +175,11 @@ cc.Class({
             this._listBullet.push(item)
         }
 
-        // var dist = Variables.rbWhite.node.position.sub(playerPos).mag();
     },
     collisionBunny(data) {
         this.boomSprite.node.x = data.node.x
         this.boomSprite.node.runAction(cc.sequence(cc.fadeIn(1), cc.fadeOut(1)))
-        // this.node.parent.getChildByName(data.element.name).destroy()
-        // data.element.stopAction(this.bulletAction)
+
     },
     collissionRip(data) {
         this._isAction = false
