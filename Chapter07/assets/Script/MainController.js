@@ -19,13 +19,15 @@ cc.Class({
 
     onLoad() {
         Emitter.instance = new Emitter()
-        this.eventCollisionBunny = this.collisionBunny.bind(this)
-        this.eventCollisionRip = this.collissionRip.bind(this)
+        this.eventKillBunny = this.killBunny.bind(this)
+        this.eventCollRock = this.collRock.bind(this)
+        this.eventCollisionBunny = this.collBunny.bind(this)
         this.eventWining = this.collissionWinning.bind(this)
 
-        Emitter.instance.registerOnce(emitName.eventCollisionBunny, this.eventCollisionBunny)
-        Emitter.instance.registerOnce(emitName.collissionRip, this.eventCollisionRip)
+        Emitter.instance.registerOnce(emitName.killBunny, this.eventKillBunny)
+        Emitter.instance.registerOnce(emitName.collRock, this.eventCollRock)
         Emitter.instance.registerOnce(emitName.win, this.eventWining)
+        Emitter.instance.registerOnce(emitName.collissionBunny, this.eventCollisionBunny)
     },
 
     start() {
@@ -182,41 +184,24 @@ cc.Class({
             this._listBullet.push(item)
         }
     },
-    collisionBunny(data) {
-        let son = data.son
-        let mom = data.mom
-        let sonTalk = data.sonTalk
-        if(this.spineTween){
-            this.spineTween.stop()
-        }
-        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN);
-        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP);
+    //Kill bunny
+    killBunny(data) {
+        let son = data
+        cc.log(son.node)
         cc.tween(son.node)
-            .delay(2)
-            .call(()=>{
-                sonTalk.string = "Mẹ ơi!!!"
-                cc.tween(sonTalk.node)
-                    .to(0,{scaleX: 0.5})
-                    .start()
-            })
-            .to(0, { scaleX: 0.5 })
-            .to(1, { x: 700 })
-            .call(()=>{
-
-                cc.tween(mom.node)
-                    .to(2,{x: 600})
-                    .call(()=>{
-                        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
-                        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
-                        Emitter.instance.emit(emitName.callMomBummy)
-                    })
-                    .to(2,{x: 400})
-                    .start()
-                    
-            })
+            .to(0.5, {angle: -115, y: -270})
             .start()
     },
-    collissionRip(data) {       
+    collRock: function (data){
+        this.loseScreen(data)
+    },
+    collBunny: function (data){
+        if(this.getBunny.node.angle < 0){
+            return
+        }
+        this.loseScreen(data)
+    },
+    loseScreen(data) {      
         this._isAction = false
         if (this.spineTween) { this.spineTween.stop() }
         data.node.active = true

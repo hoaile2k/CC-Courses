@@ -16,9 +16,6 @@ cc.Class({
         if(other.tag == 2){
             Emitter.instance.emit(emitName.killBunny,other)
         }
-        if(other.tag == 4){
-            Emitter.instance.emit(emitName.killMomBunny,this._countHeadshot)
-        }
     }  
     // update (dt) {},
 });

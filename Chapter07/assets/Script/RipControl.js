@@ -24,17 +24,10 @@ cc.Class({
 
     onCollisionEnter: function (other, self) {
         if(other.tag == 1){
-            Emitter.instance.emit(emitName.collissionRip, this.gameOver)
-
+            Emitter.instance.emit(emitName.collRock, this.gameOver)
         }
         if(other.tag == 2){
-            Emitter.instance.emit(emitName.collissionRip, this.gameOver)
-        }
-        if(other.tag == 4){
-            Emitter.instance.emit(emitName.collissionRip, this.gameOver)
-        }
-        if(other.tag == 6){
-            Emitter.instance.emit(emitName.collissionRip, this.gameOver)
+            Emitter.instance.emit(emitName.collissionBunny, this.gameOver)
         }
         if(other.tag == 3){
             Emitter.instance.emit(emitName.win, this.gameOver)

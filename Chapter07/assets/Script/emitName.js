@@ -1,10 +1,9 @@
 const name = {
     eventCollisionBunny: "eventCollisionBunny",
     killBunny: "killBunny",
-    collissionRip: "collissionRip",
+    collRock: "collRock",
     collissionBunny: "collissionBunny",
     win: "winning",
     killMomBunny: "killMomBunny",
-    callMomBummy: "callMomBummy",
 }
 module.exports = name
