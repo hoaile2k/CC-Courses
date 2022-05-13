@@ -14,8 +14,8 @@ cc.Class({
     onLoad () {
         let manager = cc.director.getCollisionManager()
         manager.enabled = true
-        // manager.enabledDebugDraw = true
-        // manager.enabledDrawBoundingBox = true
+        manager.enabledDebugDraw = true
+        manager.enabledDrawBoundingBox = true
     },
 
     start () {
@@ -31,6 +31,9 @@ cc.Class({
         }
         if(other.tag == 3){
             Emitter.instance.emit(emitName.win, this.gameOver)
+        }
+        if(other.tag == 7){
+            Emitter.instance.emit(emitName.collGround)
         }
     }    
     // update (dt) {},

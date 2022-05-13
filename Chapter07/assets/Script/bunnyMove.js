@@ -14,7 +14,7 @@ cc.Class({
 
     onLoad() {
         this.eventKillBunny = this.killBunny.bind(this)
-        Emitter.instance.registerOnce(emitName.killBunny, this.eventKillBunny)
+        Emitter.instance.registerEvent(emitName.killBunny, this.eventKillBunny)
     },
 
     start() {
@@ -28,14 +28,13 @@ cc.Class({
         const bunny = {
             son: this.getBunny,
         }
-        cc.tween(this.getBoom.node)
-            .to(0.5,{opacity: 255})
-            .to(0.5,{opacity: 0})
-            .start()
-
-        cc.log(this.getBoom.node)
-        this.node.stopAction(this._bunnyAction)
-        Emitter.instance.emit(emitName.eventCollisionBunny, bunny)
+        // this.getBoom.node.stopAction(this._bunnyAction)
+        cc.log(this.getBunny.node.angle)
+        if(this.getBunny.node.angle < 0){
+            this.getBoom.node.stopAction(this._bunnyAction)
+            Emitter.instance.removeEvent(emitName.killBunny, this.eventKillBunny)
+        }
+        // Emitter.instance.emit(emitName.bunnyMove, )
     },
 
     update(dt) {

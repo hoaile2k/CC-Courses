@@ -4,18 +4,19 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        _countHeadshot: 0,
+
     },
 
     // onLoad () {},
 
     start () {
-
+       
     },
     onCollisionEnter: function (other, self) {
         if(other.tag == 2){
-            Emitter.instance.emit(emitName.killBunny,other)
+            // self.node.destroy()
+            Emitter.instance.emit(emitName.killBunny,self)
         }
-    }  
+    }  ,
     // update (dt) {},
 });

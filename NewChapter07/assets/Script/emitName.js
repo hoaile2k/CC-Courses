@@ -4,6 +4,6 @@ const name = {
     collRock: "collRock",
     collissionBunny: "collissionBunny",
     win: "winning",
-    collGround: "collGround", 
+    killMomBunny: "killMomBunny",
 }
 module.exports = name
