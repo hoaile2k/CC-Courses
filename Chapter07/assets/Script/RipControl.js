@@ -32,6 +32,12 @@ cc.Class({
         if(other.tag == 3){
             Emitter.instance.emit(emitName.win, this.gameOver)
         }
+        if(other.tag == 11){
+            Emitter.instance.emit(emitName.collRock, this.gameOver)
+        }
+        if(other.tag == 12){
+            Emitter.instance.emit(emitName.collRock, this.gameOver)
+        }
         if(other.tag == 7){
             Emitter.instance.emit(emitName.collGround)
         }

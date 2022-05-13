@@ -249,6 +249,12 @@ cc.Class({
         }
         this.loseScreen(data)
     },
+    collGround() {
+        this.playerCollGround = true
+        if (this._canJump && !this._canRunning && !this._endgame) {
+            this.spineBoy.addAnimation(0, "run", true)
+        }
+    },
     loseScreen(data) {
         this._endGame = true
         this._isAction = false
@@ -261,9 +267,9 @@ cc.Class({
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
 
         this.getScore.node.active = false
-        const scoreValue = this._score
-        this.endScore = 0
-        this._score = 0
+        const scoreValue = 0
+        this.endScore = this.score
+        // this._score = 0
         cc.tween(this)
             .to(2,{_score: 0})
             .start()
@@ -278,12 +284,6 @@ cc.Class({
                 cc.director.loadScene("Chapter07")
             })
             .start()
-    },
-    collGround() {
-        this.playerCollGround = true
-        if (this._canJump && !this._canRunning && !this._endgame) {
-            this.spineBoy.addAnimation(0, "run", true)
-        }
     },
     collissionWinning(data) {
         this._endGame = true
