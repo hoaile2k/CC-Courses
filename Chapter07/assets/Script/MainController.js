@@ -10,6 +10,7 @@ cc.Class({
         getBunny: cc.Component,
         boomSprite: cc.Sprite,
         getScore: cc.Label,
+        getEndScore: cc.Label,
         _isAction: true,
         _canJump: true,
         _canRunning: true,
@@ -35,17 +36,26 @@ cc.Class({
     },
 
     start() {
-        this.spineBoy.setAnimation(0, "portal", false)
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
-        this.updateScore()
-        // this.score = 100
-        this.schedule(this.updateScore, 1, 100)
+        let spineBoy = this.spineBoy
+        spineBoy.setAnimation(0, "portal", false)
+        spineBoy.setCompleteListener(() => {
+            cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
+            cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
+            this.updateScore()
+        })
+
     },
 
     updateScore: function () {
+        this.schedule(() => {
+            if (!this._endGame){
+                this._score--
+                this.getScore.string = "Score: " + this._score
+                this.unschedule()
+            }
+                
+        }, 1, 100)
 
-        this.getScore.string = "Score: " + this._score--
     },
 
     onKeyUp: function (event) {
@@ -142,7 +152,6 @@ cc.Class({
         }
         if (!this._canJump) {
             this.spineBoy.setAnimation(0, "jump", true)
-            cc.log(this.playerCollGround)
         }
     },
 
@@ -160,7 +169,6 @@ cc.Class({
         }
         if (!this._canJump) {
             this.spineBoy.setAnimation(0, "jump", false)
-            cc.log("jump right")
         }
 
     },
@@ -212,7 +220,6 @@ cc.Class({
     //Kill bunny
     killBunny(data) {
         let son = this.getBunny
-        cc.log(data)
         let hp = this.getBunny.node.getChildByName("HP").getComponent("cc.ProgressBar")
         hp.progress -= 0.05
 
@@ -243,39 +250,45 @@ cc.Class({
         this.loseScreen(data)
     },
     loseScreen(data) {
-        this._endgame = true
+        this._endGame = true
         this._isAction = false
         this.unschedule(this.updateScore);
         if (this.spineTween) { this.spineTween.stop() }
         data.node.active = true
         let text = data.node.getChildByName("richtext")
+        this.spineBoy.setAnimation(0,"death",false)
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
+
+        this.getScore.node.active = false
         const scoreValue = this._score
-        // cc.tween(this.getScore)
-        //     .to(0,{string: 0})
-        //     .to(2, {string: "score: "+ scoreValue})
-        //     .start()
-        cc.log(this.getScore)
+        this.endScore = 0
+        this._score = 0
+        cc.tween(this)
+            .to(2,{_score: 0})
+            .start()
+
         cc.tween(text)
             .call(() => {
                 this.spineBoy.setAnimation(0, "death", true)
             })
-            .by(1, { scale: 2 })
-            .delay(0.5)
-            // .call(() => {
-            //     cc.director.loadScene("Chapter07")
-            // })
+            .by(1, { scale: 1 })
+            .delay(2)
+            .call(() => {
+                cc.director.loadScene("Chapter07")
+            })
             .start()
     },
     collGround() {
         this.playerCollGround = true
         if (this._canJump && !this._canRunning && !this._endgame) {
-            this.spineBoy.setAnimation(0, "run", true)
+            this.spineBoy.addAnimation(0, "run", true)
         }
     },
     collissionWinning(data) {
-        this._endgame = true
+        this._endGame = true
+        this._isAction = false
+        this.getScore.node.active = false
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
         Emitter.instance.removeEvent(emitName.collissionBunny, this.eventCollisionBunny)
         Emitter.instance.removeEvent(emitName.collGround, this.eventCollGround)
@@ -284,15 +297,22 @@ cc.Class({
         Emitter.instance.removeEvent(emitName.win, this.eventWining)
 
         data.node.getChildByName("richtext").getComponent("cc.RichText").string = "<color=#00ff00>You </color><color=#0fffff>Win</color>"
-        this._isAction = false
         if (this.spineTween) { this.spineTween.stop() }
         this.spineBoy.setAnimation(0, "jump", true)
         data.node.active = true
         let text = data.node.getChildByName("richtext")
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
+
+        const scoreValue = this._score
+        this.endScore = 0
+        this._score = 0
+        cc.tween(this)
+            .to(2,{_score: scoreValue})
+            .start()
+
         cc.tween(text)
-            .by(1, { scale: 2 })
-            .delay(0.5)
+            .by(1, { scale: 1 })
+            .delay(2)
             .call(() => {
                 cc.director.loadScene("Chapter07")
             })
@@ -304,5 +324,8 @@ cc.Class({
 
     update(dt) {
         this.node.getComponent(cc.BoxCollider).offset = cc.v2(this.spineBoy.findBone("torso").worldX, this.spineBoy.findBone("torso3").worldY);
+        // this.getScore.string = this._score  
+        let score = Math.floor(this.endScore = this._score)
+        this.getEndScore.string = "Your Score \n "+ score
     },
 });

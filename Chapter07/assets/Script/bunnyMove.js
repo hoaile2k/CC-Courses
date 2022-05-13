@@ -25,16 +25,10 @@ cc.Class({
     },
 
     killBunny: function (data) {
-        const bunny = {
-            son: this.getBunny,
-        }
-        // this.getBoom.node.stopAction(this._bunnyAction)
-        cc.log(this.getBunny.node.angle)
         if(this.getBunny.node.angle < 0){
             this.getBoom.node.stopAction(this._bunnyAction)
             Emitter.instance.removeEvent(emitName.killBunny, this.eventKillBunny)
         }
-        // Emitter.instance.emit(emitName.bunnyMove, )
     },
 
     update(dt) {
