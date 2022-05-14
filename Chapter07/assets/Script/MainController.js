@@ -39,11 +39,13 @@ cc.Class({
         let spineBoy = this.spineBoy
         spineBoy.setAnimation(0, "portal", false)
         spineBoy.setCompleteListener(() => {
+            
+        })
+        this.scheduleOnce(()=>{
+            this.updateScore()
             cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
             cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
-            this.updateScore()
-        })
-
+        },3)
     },
 
     updateScore: function () {
@@ -53,7 +55,7 @@ cc.Class({
                 this.getScore.string = "Score: " + this._score
                 this.unschedule()
             }
-                
+            
         }, 1, 100)
 
     },
@@ -108,9 +110,8 @@ cc.Class({
     moveUpUp: function () {
         if (this._canJump) {
             this._canJump = false
-            // this._isAction = false
+            this._isAction = false
             this.spineBoy.setAnimation(0, "jump", false)
-            if (this.spineBoy.node.scaleX > 0) {
                 cc.tween(this.spineBoy.node)
                     .by(0.5, { y: 200 },)
                     .by(0.5, { y: -200 },)
@@ -122,18 +123,6 @@ cc.Class({
                         }
                     })
                     .start()
-            }
-            else {
-                cc.tween(this.spineBoy.node)
-                    .by(0.5, { y: 200 },)
-                    .by(0.5, { y: -200 },)
-                    .call(() => {
-                        this._canJump = true
-                        this._isAction = true
-
-                    })
-                    .start()
-            }
         }
     },
 
@@ -141,9 +130,8 @@ cc.Class({
     moveLeft: function () {
         if (this._isAction && this._canRunning) {
             this._isAction = false
-            // this._canJump = true
-            this.spineBoy.setAnimation(0, "run", true)
             this._canRunning = false
+            this.spineBoy.setAnimation(0, "run", true)
             this.spineTween =
                 cc.tween(this.spineBoy.node)
                     .to(0, { scaleX: -0.3 })
@@ -158,9 +146,8 @@ cc.Class({
     moveRight: function () {
         if (this._isAction && this._canRunning) {
             this._isAction = false
-            // this._canJump = true
-            this.spineBoy.setAnimation(0, "run", true)
             this._canRunning = false
+            this.spineBoy.setAnimation(0, "run", true)
             this.spineTween =
                 cc.tween(this.spineBoy.node)
                     .to(0, { scaleX: 0.3 })
@@ -168,11 +155,12 @@ cc.Class({
                     .start()
         }
         if (!this._canJump) {
-            this.spineBoy.setAnimation(0, "jump", false)
+            let boyJump = this.spineBoy
+            boyJump.setAnimation(0, "jump", false)
         }
 
     },
-    moveRightUp: function (keyCode) {
+    moveRightUp: function () {
         if (this._canRunning)
             return
         this._isAction = true
@@ -183,7 +171,7 @@ cc.Class({
 
         this.spineBoy.setAnimation(0, "idle", false)
     },
-    moveLeftUp: function (keyCode) {
+    moveLeftUp: function () {
         if (this._canRunning)
             return
         this._isAction = true
@@ -237,7 +225,6 @@ cc.Class({
 
             data.node.destroy()
         }
-
 
     },
     collRock: function (data) {
