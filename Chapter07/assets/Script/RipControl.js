@@ -33,11 +33,9 @@ cc.Class({
             Emitter.instance.emit(emitName.win, this.gameOver)
         }
         if(other.tag == 11){
-            cc.log("trai")
             Emitter.instance.emit(emitName.limitLeft, this.gameOver)
         }
         if(other.tag == 12){
-            cc.log('phai')
             Emitter.instance.emit(emitName.limitLeft, this.gameOver)
         }
         if(other.tag == 7){

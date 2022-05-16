@@ -59,9 +59,8 @@ cc.Class({
                 this.getScore.string = "Score: " + this._score
                 this.unschedule()
             }
-
         }, 0.5, 99)
-
+        
     },
 
     onKeyUp: function (event) {
@@ -109,7 +108,7 @@ cc.Class({
                 this.moveRight();
                 break;
             }
-            
+
         }
     },
     moveUpUp: function () {
@@ -232,8 +231,7 @@ cc.Class({
         }
 
     },
-    cloudMove(data){
-        cc.log(data)
+    cloudMove(data) {
         data.x = this.spineBoy.node.x
     },
 
@@ -254,8 +252,8 @@ cc.Class({
     },
     collGround() {
         this.playerCollGround = true
-        if (this._canJump && !this._canRunning && !this._endgame) {
-            // this.spineBoy.addAnimation(0, "run", true)
+        if (this._canJump && !this._canRunning && !this._endGame) {
+            this.spineBoy.addAnimation(0, "run", true)
         }
     },
     loseScreen(data) {
@@ -264,6 +262,7 @@ cc.Class({
         this.unschedule(this.updateScore);
         if (this.spineTween) { this.spineTween.stop() }
         data.node.active = true
+        data.node.getChildByName("particle").active = false
         let text = data.node.getChildByName("richtext")
         this.spineBoy.setAnimation(0, "death", false)
         Emitter.instance.emit(emitName.loseParticle)
@@ -284,16 +283,15 @@ cc.Class({
             })
             .by(1, { scale: 1 })
             .delay(2)
-            .call(() => {
-                // cc.game.restart()
-                // cc.director.loadScene("Chapter07")
-            })
             .start()
+
+
     },
     collissionWinning(data) {
         this._endGame = true
         this._isAction = false
         this.getScore.node.active = false
+
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
         Emitter.instance.removeEvent(emitName.collissionBunny, this.eventCollisionBunny)
         Emitter.instance.removeEvent(emitName.collGround, this.eventCollGround)
@@ -318,13 +316,10 @@ cc.Class({
         cc.tween(text)
             .by(1, { scale: 1 })
             .delay(2)
-            .call(() => {
-                cc.director.loadScene("Chapter07")
-            })
             .start()
     },
-    jumpTo() {
-
+    resetGame() {
+        cc.game.restart()
     },
 
     update(dt) {

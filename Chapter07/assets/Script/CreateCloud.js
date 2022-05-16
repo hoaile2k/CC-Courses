@@ -21,7 +21,8 @@ cc.Class({
 
     start() {
         let cloud = cc.instantiate(this.cloudPrefab)
-        cloud.parent = this.node        
+        cloud.parent = this.node   
+        cloud.active = false     
         this.cloud = cloud
         cloud.y = 200
         Emitter.instance.emit(emitName.cloudMove, cloud)
@@ -30,7 +31,21 @@ cc.Class({
     showParticle(){
         this.thunderPar.node.x = this.spineBoy.node.x
         this.thunderPar.node.active = true
-        cc.log(this.thunderPar.node.x , this.spineBoy.node.x)
+        
+        cc.tween(this.spineBoy.node)
+            .call(()=>{
+                this.cloud.active = true
+            })
+            .delay(3)
+            .to(1, { scale: 0, y: 200, opacity: 0})
+            .call(()=>{
+                this.thunderPar.node.active = false
+            })
+            .start()
+        cc.tween(this.cloud)
+            .delay(4)
+            .to(1, { scale: 0, y: 600, opacity: 0})
+            .start()
     },
 
     update (dt) {
@@ -42,7 +57,6 @@ cc.Class({
                     this._canMove = true
                 })
                 .start()
-
         }
         
     },
