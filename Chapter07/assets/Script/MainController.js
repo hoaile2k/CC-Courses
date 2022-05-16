@@ -11,6 +11,22 @@ cc.Class({
         boomSprite: cc.Sprite,
         getScore: cc.Label,
         getEndScore: cc.Label,
+        retroAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
+        endAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
+        winAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
+        shootAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
         _isAction: true,
         _canJump: true,
         _canRunning: true,
@@ -20,6 +36,8 @@ cc.Class({
     },
 
     onLoad() {
+        // this.retroAudio
+        cc.audioEngine.playEffect(this.retroAudio, false);
         this.eventKillBunny = this.killBunny.bind(this)
         this.eventCollRock = this.collRock.bind(this)
         this.eventCollisionBunny = this.collBunny.bind(this)
@@ -208,6 +226,7 @@ cc.Class({
             })))
             this._listBullet.push(item)
         }
+        cc.audioEngine.playEffect(this.shootAudio, false);
     },
     //Kill bunny
     killBunny(data) {
@@ -260,6 +279,7 @@ cc.Class({
         this._endGame = true
         this._isAction = false
         this.unschedule(this.updateScore);
+        cc.audioEngine.playEffect(this.endAudio, false);
         if (this.spineTween) { this.spineTween.stop() }
         data.node.active = true
         data.node.getChildByName("particle").active = false
@@ -291,7 +311,7 @@ cc.Class({
         this._endGame = true
         this._isAction = false
         this.getScore.node.active = false
-
+        cc.audioEngine.playEffect(this.winAudio, false);
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
         Emitter.instance.removeEvent(emitName.collissionBunny, this.eventCollisionBunny)
         Emitter.instance.removeEvent(emitName.collGround, this.eventCollGround)
