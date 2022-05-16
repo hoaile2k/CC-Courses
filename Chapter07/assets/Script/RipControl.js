@@ -33,10 +33,12 @@ cc.Class({
             Emitter.instance.emit(emitName.win, this.gameOver)
         }
         if(other.tag == 11){
-            Emitter.instance.emit(emitName.collRock, this.gameOver)
+            cc.log("trai")
+            Emitter.instance.emit(emitName.limitLeft, this.gameOver)
         }
         if(other.tag == 12){
-            Emitter.instance.emit(emitName.collRock, this.gameOver)
+            cc.log('phai')
+            Emitter.instance.emit(emitName.limitLeft, this.gameOver)
         }
         if(other.tag == 7){
             Emitter.instance.emit(emitName.collGround)

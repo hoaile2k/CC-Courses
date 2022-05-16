@@ -20,12 +20,13 @@ cc.Class({
     },
 
     onLoad() {
-        Emitter.instance = new Emitter()
         this.eventKillBunny = this.killBunny.bind(this)
         this.eventCollRock = this.collRock.bind(this)
         this.eventCollisionBunny = this.collBunny.bind(this)
         this.eventWining = this.collissionWinning.bind(this)
         this.eventCollGround = this.collGround.bind(this)
+        this.eventLimitLeft = this.limitColl.bind(this)
+        this.eventCloudMove = this.cloudMove.bind(this)
 
 
         Emitter.instance.registerEvent(emitName.collGround, this.eventCollGround)
@@ -33,30 +34,33 @@ cc.Class({
         Emitter.instance.registerOnce(emitName.collRock, this.eventCollRock)
         Emitter.instance.registerOnce(emitName.win, this.eventWining)
         Emitter.instance.registerOnce(emitName.collissionBunny, this.eventCollisionBunny)
+        Emitter.instance.registerEvent(emitName.limitLeft, this.eventLimitLeft)
+        Emitter.instance.registerEvent(emitName.cloudMove, this.eventCloudMove)
+
     },
 
     start() {
         let spineBoy = this.spineBoy
         spineBoy.setAnimation(0, "portal", false)
         spineBoy.setCompleteListener(() => {
-            
+
         })
-        this.scheduleOnce(()=>{
+        this.scheduleOnce(() => {
             this.updateScore()
             cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
             cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
-        },3)
+        }, 3)
     },
 
     updateScore: function () {
         this.schedule(() => {
-            if (!this._endGame){
+            if (!this._endGame) {
                 this._score--
                 this.getScore.string = "Score: " + this._score
                 this.unschedule()
             }
-            
-        }, 1, 100)
+
+        }, 0.5, 99)
 
     },
 
@@ -83,6 +87,10 @@ cc.Class({
                 this.moveUpUp();
                 break;
             }
+            case cc.macro.KEY.space: {
+                this.spaceShoot()
+                break;
+            }
         }
     },
 
@@ -101,10 +109,7 @@ cc.Class({
                 this.moveRight();
                 break;
             }
-            case cc.macro.KEY.space: {
-                this.spaceShoot()
-                break;
-            }
+            
         }
     },
     moveUpUp: function () {
@@ -112,17 +117,17 @@ cc.Class({
             this._canJump = false
             this._isAction = false
             this.spineBoy.setAnimation(0, "jump", false)
-                cc.tween(this.spineBoy.node)
-                    .by(0.5, { y: 200 },)
-                    .by(0.5, { y: -200 },)
-                    .call(() => {
-                        this._canJump = true
-                        this._isAction = true
-                        if (this.playerCollGround) {
-                            this.spineBoy.addAnimation(0, "idle", true)
-                        }
-                    })
-                    .start()
+            cc.tween(this.spineBoy.node)
+                .by(0.5, { y: 200 },)
+                .by(0.5, { y: -200 },)
+                .call(() => {
+                    this._canJump = true
+                    this._isAction = true
+                    if (this.playerCollGround) {
+                        this.spineBoy.addAnimation(0, "idle", true)
+                    }
+                })
+                .start()
         }
     },
 
@@ -227,6 +232,17 @@ cc.Class({
         }
 
     },
+    cloudMove(data){
+        cc.log(data)
+        data.x = this.spineBoy.node.x
+    },
+
+    limitColl() {
+        if (this.spineTween) {
+            this.spineTween.stop()
+
+        }
+    },
     collRock: function (data) {
         this.loseScreen(data)
     },
@@ -239,7 +255,7 @@ cc.Class({
     collGround() {
         this.playerCollGround = true
         if (this._canJump && !this._canRunning && !this._endgame) {
-            this.spineBoy.addAnimation(0, "run", true)
+            // this.spineBoy.addAnimation(0, "run", true)
         }
     },
     loseScreen(data) {
@@ -249,7 +265,8 @@ cc.Class({
         if (this.spineTween) { this.spineTween.stop() }
         data.node.active = true
         let text = data.node.getChildByName("richtext")
-        this.spineBoy.setAnimation(0,"death",false)
+        this.spineBoy.setAnimation(0, "death", false)
+        Emitter.instance.emit(emitName.loseParticle)
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyUp, this);
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyDown, this);
 
@@ -258,17 +275,18 @@ cc.Class({
         this.endScore = this.score
         // this._score = 0
         cc.tween(this)
-            .to(2,{_score: 0})
+            .to(2, { _score: 0 })
             .start()
 
         cc.tween(text)
             .call(() => {
-                this.spineBoy.setAnimation(0, "death", true)
+                this.spineBoy.setAnimation(0, "death", false)
             })
             .by(1, { scale: 1 })
             .delay(2)
             .call(() => {
-                cc.director.loadScene("Chapter07")
+                // cc.game.restart()
+                // cc.director.loadScene("Chapter07")
             })
             .start()
     },
@@ -294,7 +312,7 @@ cc.Class({
         this.endScore = 0
         this._score = 0
         cc.tween(this)
-            .to(2,{_score: scoreValue})
+            .to(2, { _score: scoreValue })
             .start()
 
         cc.tween(text)
@@ -313,6 +331,6 @@ cc.Class({
         this.node.getComponent(cc.BoxCollider).offset = cc.v2(this.spineBoy.findBone("torso").worldX, this.spineBoy.findBone("torso3").worldY);
         // this.getScore.string = this._score  
         let score = Math.floor(this.endScore = this._score)
-        this.getEndScore.string = "Your Score \n "+ score
+        this.getEndScore.string = "Your Score \n " + score
     },
 });
